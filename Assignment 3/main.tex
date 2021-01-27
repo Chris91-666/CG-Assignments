@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[margin=1 in]{geometry}
+
+\title{Assignment 3}
+\author{Christian Mathieu Schmidt (2537621)
+\and Simon Laurent Lebailly (2549365)\\
+\and Group 2H}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+
+%
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[ngerman, english]{babel}
+\usepackage{marvosym}
+\usepackage{graphics}
+\usepackage{extarrows}
+\usepackage{forloop}
+\usepackage{mathtools}
+
+\usepackage[]{algorithm2e}
+
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage{cleveref}% http://ctan.org/pkg/cleveref
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{preliminary}{Preliminary}
+\newtheorem{notation}{Notation}
+\newtheorem{property}{Property}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{hypothesis}{Hypothesis}
+
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{definition}{Definition}{Definitions}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{preliminary}{Preliminary}{Preliminaries}
+\crefname{notation}{Notation}{Notations}
+\crefname{property}{Property}{Properties}
+\crefname{corollary}{Corollary}{Corollaries}
+\crefname{example}{Example}{Examples}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newenvironment{beweis}{\begin{proof}[Beweis]}{\end{proof}}
+%
+ 
+
+\begin{document}
+
+\maketitle
+
+
+\section*{3.1 Node count in a tree} \label{ex1}
+    Let $I$ be the number of internal nodes and $L$ be the number of leaf nodes. So it holds
+    $$L = (A-1) \cdot I + 1 (I)$$
+    The parent of a parent node has at most $A-1$ leafs, and at least one child.
+    Parents witch have only leafs, have exactly $A$ leafs.
+    Every time a leaf switches to a parent, we loose a leaf, add one internal node, and become $A$ new leafs.
+    In sum, the number of internal nodes increases by one, and the number of leafs increases by $A-1$.
+    And in conclusion we become (I).
+    Now we can conclude, that we have $(A-1) \cdot I$ leafs, but we have also to add the root node by addition $+1$.\\
+    (The more mathematical kind of proof would be via structural induction, but the description of the exercise is only "Derive a relation between the number of internal nodes I and leaf nodes L.", and not "prove your relation")
+
+\section*{3.2 Planar Surface Area Heuristic} \label{ex2}
+    
+
+
+\end{document}

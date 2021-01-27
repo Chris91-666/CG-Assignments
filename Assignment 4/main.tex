@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[margin=1 in]{geometry}
+
+\title{Assignment 4}
+\author{Christian Mathieu Schmidt (2537621)
+\and Simon Laurent Lebailly (2549365)\\
+\and Group 2H}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+
+%
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[ngerman, english]{babel}
+\usepackage{marvosym}
+\usepackage{graphics}
+\usepackage{extarrows}
+\usepackage{forloop}
+\usepackage{mathtools}
+
+\usepackage[]{algorithm2e}
+
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage{cleveref}% http://ctan.org/pkg/cleveref
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{preliminary}{Preliminary}
+\newtheorem{notation}{Notation}
+\newtheorem{property}{Property}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{hypothesis}{Hypothesis}
+
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{definition}{Definition}{Definitions}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{preliminary}{Preliminary}{Preliminaries}
+\crefname{notation}{Notation}{Notations}
+\crefname{property}{Property}{Properties}
+\crefname{corollary}{Corollary}{Corollaries}
+\crefname{example}{Example}{Examples}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newenvironment{beweis}{\begin{proof}[Beweis]}{\end{proof}}
+%
+ 
+
+\begin{document}
+
+\maketitle
+
+
+\section*{4.1 Transformations} \label{ex1}
+    First we define a scaling matrix:
+    $$M_{scale} = \left( \begin{matrix} 4 & 0 & 0 \\ 0 & 5 & 0 \\ 0 & 0 & 1 \end{matrix} \right)$$
+    Then we construct the translation matrix:
+    $$M_{translate} = \left( \begin{matrix} 1 & 0 & 2 \\ 0 & 1 & 2,5 \\ 0 & 0 & 1 \end{matrix} \right)$$
+    At last we construct the shear matrix:
+    $$M_{shear} = \left( \begin{matrix} 1 & h_{xy} & 0 \\ h_{yx} & 1 & 0 \\ 0 & 0 & 1 \end{matrix} \right)$$
+    Unfortunately, we were unable to find any way on the drawing to conclude the exact parameters by which the points get sheared, as it seems that no matter our approach, there was always one information missing. Our approach would be to use the fact that P and M are on the same y-coordinate, alongside the fact that M is the middle point of the diagonals... and since M is the only point that we know the exact coordinates of, and that it is also coincidentally the only point that does not move on a shear transformation, we can not compute the parameters simply by applying the matrix product on the point.\\\\
+    Lastly, the complete transformation matrix is the product of those three:
+    $$M_{shear} * M_{translate} * M_{scale}$$
+
+\newpage
+\section*{4.2 Homogeneous Coordinates} \label{ex2}
+\subsection*{a)}
+    Due to the definition of the scalar product of a vector, we know that:
+    $$\alpha\left(\begin{matrix} x\\y\\z\\w\end{matrix}\right) = \left(\begin{matrix} \alpha x\\ \alpha y\\ \alpha z\\ \alpha w\end{matrix}\right)$$
+    At the same time, a homogeneous point yields a point equivalent to dividing each of its components by the last component. Therefore, we have:
+    $$\left(\begin{matrix} \alpha x\\ \alpha y\\ \alpha z\\ \alpha w\end{matrix}\right) \rightarrow \left(\begin{matrix} \frac{\alpha x}{\alpha w}\\ \frac{\alpha y}{\alpha w}\\ \frac{\alpha z}{\alpha w}\end{matrix}\right) = \left(\begin{matrix} \frac{x}{w}\\ \frac{y}{w}\\ \frac{z}{w}\end{matrix}\right)$$
+    which is the same point yielded by the original homogeneous coordinates.
+\subsection*{b)}
+    Similarly, we have:
+    $$\left(\begin{matrix} a_0\\a_1\\a_2\\1\end{matrix}\right) + \left(\begin{matrix} b_0\\b_1\\b_2\\1\end{matrix}\right) + \left(\begin{matrix} c_0\\c_1\\c_2\\1\end{matrix}\right)
+    = \left(\begin{matrix} a_0 + b_0 + c_0\\a_1 + b_1 + c_1\\a_2 + b_2 + c_2\\3\end{matrix}\right)
+    \rightarrow \left(\begin{matrix} \frac{a_0 + b_0 + c_0}{3}\\ \frac{a_1 + b_1 + c_1}{3}\\ \frac{a_2 + b_2 + c_2}{3}\end{matrix}\right)
+    = \left(\begin{matrix} \frac{a_0}{3} + \frac{b_0}{3} + \frac{c_0}{3}\\ \frac{a_1}{3} + \frac{b_1}{3} + \frac{c_1}{3}\\ \frac{a_2}{3} + \frac{b_2}{3} + \frac{c_2}{3}\end{matrix}\right)
+    = \frac{1}{3}\left(\begin{matrix} a_0\\a_1\\a_2\end{matrix}\right)
+    + \frac{1}{3}\left(\begin{matrix} b_0\\b_1\\b_2\end{matrix}\right)
+    + \frac{1}{3}\left(\begin{matrix} c_0\\c_1\\c_2\end{matrix}\right)$$
+    Which is equivalent to the center point of the triangle defined by these three points.
+
+\newpage
+\section*{4.3 Homogeneous Lines in 2D*} \label{ex3}
+ 
+    A homogeneous line connecting two points $p=\left( \begin{matrix} p_x\\ p_y\\ p_z\end{matrix}\right)$ and $q=\left( \begin{matrix} q_x\\ q_y\\ q_z\end{matrix}\right)$ is represented by a vector $l=\left( \begin{matrix} a\\ b\\ c\end{matrix}\right)$ such that the dot product of $l$ with both of these points is equal to 0.\\
+    \begin{proof}
+        As such, we choose $l=p \times q$ and proceed to calculate the dot product with each of the points.\\\\
+        \begin{align}
+            l \cdot p &= a p_x + b p_y + cb_z\\
+            &= p_x(p_y q_w - p_w q_y) + p_y(p_w q_x - p_x q_w) + p_w(p_x q_y - p_y q_x)\\
+            &= p_x p_y q_w - p_x q_y p_w + q_x p_y p_w - p_x p_y q_w + p_x q_y p_w - q_x p_y p_w\\
+            &= p_x p_y q_w - p_x p_y q_w + q_x p_y p_w - q_x p_y p_w + p_x q_y p_w - p_x q_y p_w\\
+            &= 0
+        \end{align}
+        \begin{align}
+            l \cdot q &= a q_x + b q_y + c q_z\\
+            &= q_x (p_y q_w - p_w q_y) + q_y (p_w q_x - p_x q_w) + q_w (p_x q_y - p_y q_x)\\
+            &= q_x p_y q_w - q_x p_y p_w + q_x q_y p_w - p_x q_y q_w + p_x q_y q_w - q_x p_y q_w\\
+            &= 0
+        \end{align}
+    \end{proof}
+    
+    
+    
+    
+
+\end{document}
+

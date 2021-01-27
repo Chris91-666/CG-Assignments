@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[margin=1 in]{geometry}
+
+\title{Assignment 7}
+\author{Christian Mathieu Schmidt (2537621)
+\and Simon Laurent Lebailly (2549365)\\
+\and Group 2H}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+
+%
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[ngerman, english]{babel}
+\usepackage{marvosym}
+\usepackage{graphics}
+\usepackage{extarrows}
+\usepackage{forloop}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage[]{algorithm2e}
+
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage{cleveref}% http://ctan.org/pkg/cleveref
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{preliminary}{Preliminary}
+\newtheorem{notation}{Notation}
+\newtheorem{property}{Property}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{hypothesis}{Hypothesis}
+
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{definition}{Definition}{Definitions}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{preliminary}{Preliminary}{Preliminaries}
+\crefname{notation}{Notation}{Notations}
+\crefname{property}{Property}{Properties}
+\crefname{corollary}{Corollary}{Corollaries}
+\crefname{example}{Example}{Examples}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newenvironment{beweis}{\begin{proof}[Beweis]}{\end{proof}}
+%
+ 
+
+\begin{document}
+
+\maketitle
+
+
+\section*{7.1 Color Space} \label{ex1}
+    \begin{itemize}
+        \item CIE-XYZ transformation:\\
+        We need to find the Transformation $M$ such that:
+        $$M \left(\begin{matrix} R\\G\\B \end{matrix}\right)  = \left( \begin{matrix} X_r & X_g & X_b \\ Y_r & Y_g & Y_b \\ Z_r & Z_g & Z_b \end{matrix} \right)\left(\begin{matrix} R\\G\\B \end{matrix}\right) = \left( \begin{matrix} x_rC_r & x_gC_g & x_bC_b \\ y_rC_r & y_gC_g & y_bC_b \\ z_rC_r & z_gC_g & z_bC_b \end{matrix} \right)\left(\begin{matrix} R\\G\\B \end{matrix}\right) = \left(\begin{matrix} X\\Y\\Z \end{matrix}\right)$$
+        Based on the specification of default CIE-XYZ values for monitors, we can complete the matrix as follows:
+        $$M  = \left( \begin{matrix} 0.64 * C_r & 0.3 * C_g & 0.15 * C_b \\ 0.33 * C_r & 0.6 * C_g & 0.06 * C_b \\ (1-0.64-0.33)C_r & (1-0.3-0.6)C_g & (1-0.15-0.06)C_b \end{matrix} \right) = \left( \begin{matrix} 0.64 * C_r & 0.3 * C_g & 0.15 * C_b \\ 0.33 * C_r & 0.6 * C_g & 0.06 * C_b \\ 0.03 * C_r & 0.1 * C_g & 0.79 * C_b \end{matrix} \right)$$
+        Furthermore, we also know the white values $x_w = 0.3127$ and $y_w = 0.3290$, and the RGB Values of the color white is (1, 1, 1):
+        $$M \left(\begin{matrix} 1\\1\\1 \end{matrix}\right)  = \left( \begin{matrix} 0.64 * C_r & 0.3 * C_g & 0.15 * C_b \\ 0.33 * C_r & 0.6 * C_g & 0.06 * C_b \\ 0.03 * C_r & 0.1 * C_g & 0.79 * C_b \end{matrix} \right)\left(\begin{matrix} 1\\1\\1 \end{matrix}\right) = \left(\begin{matrix} X_w \\ Y_w \\ Z_w\end{matrix}\right)$$
+        If we normalize the constant $Y_w = 1$, we then get the expression:
+        $$Y_w = y_wC_w \Leftrightarrow 1 = 0.3290 * C_w \Leftrightarrow C_w = \frac{1}{0.3290}$$
+        Based on $C_w$, we can deduce the other values of $X_w$ and $Z_w$:
+        \begin{align}
+            &X_w = x_wC_w = 0.3127 * \frac{1}{0.3290} = 0.9505\\
+            &Y_w = 1\\
+            &Z_w = x_wC_w = (1-0.3127 - 0.3290) * \frac{1}{0.3290} = \frac{0.3583}{0.3290} = 1.0891
+        \end{align}
+        If we now solve the linear equation, we get out transformation matrix as follows:
+        $$M = \left( \begin{matrix} 0.64 * 0.6463 & 0.3 * 1.1921 & 0.15 * 1.1917 \\ 0.33 * 0.6463 & 0.6 * 1.1921 & 0.06 * 1.1917 \\ 0.03 * 0.6463 & 0.1 * 1.1921 & 0.79 * 1.1917 \end{matrix} \right) = \left( \begin{matrix} 0.413632 & 0.35763 & 0.178755 \\ 0.213279 & 0.71526 & 0.071502 \\ 0.019389 & 0.11921 & 0.941443 \end{matrix} \right)$$
+        We can now use this matrix to compute our XYZ values for the RGB Color (1, 0, 1):
+        $$M \left(\begin{matrix} 1 \\ 0 \\ 1\end{matrix}\right) = \left( \begin{matrix} 0.413632 & 0.35763 & 0.178755 \\ 0.213279 & 0.71526 & 0.071502 \\ 0.019389 & 0.11921 & 0.941443 \end{matrix} \right) \left(\begin{matrix} 1 \\ 0 \\ 1\end{matrix}\right) = \left(\begin{matrix} 0.413632 + 0.178755 \\ 0.213279 + 0.071502 \\ 0.019389 + 0.941443\end{matrix}\right) = \left(\begin{matrix} 0.5924 \\ 0.2848 \\ 0.9608\end{matrix}\right)$$
+        
+        \item The gamma correction is irrelevant for this particular color as all RGB Values of this color are at the extreme ends of the spectrum, meaning a correction is not necessary.
+    \end{itemize}
+    
+    
+    
+    
+
+\end{document}
+

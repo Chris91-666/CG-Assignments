@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[margin=1 in]{geometry}
+
+\title{Assignment 5}
+\author{Christian Mathieu Schmidt (2537621)
+\and Simon Laurent Lebailly (2549365)\\
+\and Group 2H}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+
+%
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[ngerman, english]{babel}
+\usepackage{marvosym}
+\usepackage{graphics}
+\usepackage{extarrows}
+\usepackage{forloop}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage[]{algorithm2e}
+
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage{cleveref}% http://ctan.org/pkg/cleveref
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{preliminary}{Preliminary}
+\newtheorem{notation}{Notation}
+\newtheorem{property}{Property}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{hypothesis}{Hypothesis}
+
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{definition}{Definition}{Definitions}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{preliminary}{Preliminary}{Preliminaries}
+\crefname{notation}{Notation}{Notations}
+\crefname{property}{Property}{Properties}
+\crefname{corollary}{Corollary}{Corollaries}
+\crefname{example}{Example}{Examples}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newenvironment{beweis}{\begin{proof}[Beweis]}{\end{proof}}
+%
+ 
+
+\begin{document}
+
+\maketitle
+
+
+\section*{5.1 Normalization of the Phong BRDF} \label{ex1}
+\begin{enumerate}[label=(\alph*)]
+    \item[a)]
+    \begin{proof}
+    Since $k_s=0$, we can simplify the $Phong$ BRDF as follows:\\
+    $$f_r({\omega}_i, {\omega}_o) = k_d + k_s cos^n({\omega}_r, {\omega}_o) \Leftrightarrow f_r({\omega}_i, {\omega}_o) = k_d$$
+    Using the definition of energy conservation found in the lecture slides, we can conclude the following:
+    \begin{align}
+        & & \int_{\Omega_+ } f_r({\omega}_i, {\omega}_o)cos({\theta}_o) d{\omega}_o &\leq 1\\ 
+        &\Leftrightarrow & \int_{\Omega_+} k_d cos({\theta}_o) d{\omega}_o &\leq 1\\
+        &\Leftrightarrow & k_d \int_{\phi_o = 0}^{2\pi} \int_{\theta_o = 0}^{\frac{\pi}{2}} cos({\theta}_o) sin(\theta_o) d{\theta}_o d{\phi}_o &\leq 1\\
+        &\Leftrightarrow & \frac{k_d}{2} \int_{\phi_o = 0}^{2\pi} \int_{\theta_o = 0}^{\frac{\pi}{2}} sin(2\theta_o) d{\theta}_o d{\phi}_o &\leq 1\\
+        &\Leftrightarrow & \frac{k_d}{2} \int_{\phi_o = 0}^{2\pi} \left[ - \frac{1}{2} cos({2\theta}_o) \right]_{\theta_o = 0}^{\frac{\pi}{2}} d{\phi}_o &\leq 1\\
+        &\Leftrightarrow & -\frac{k_d}{4} \int_{\phi_o = 0}^{2\pi} \left(cos \left( \frac{2\pi}{2} \right) - cos(0) \right) d{\phi}_o &\leq 1\\
+        &\Leftrightarrow & -\frac{k_d}{4} \int_{\phi_o = 0}^{2\pi} \left(-1 - 1 \right) d{\phi}_o &\leq 1\\
+        &\Leftrightarrow & \frac{k_d}{2} \int_{\phi_o = 0}^{2\pi} 1\ d{\phi}_o &\leq 1\\
+        &\Leftrightarrow & \frac{k_d}{2} \left[ \phi_o \right]_{\phi_o = 0}^{2\pi} &\leq 1\\
+        &\Leftrightarrow & \pi k_d &\leq 1\\
+        &\Leftrightarrow & \pi \frac{{\rho}_d}{C_d} &\leq 1\\
+        &\Leftrightarrow & \pi {\rho}_d &\leq C_d
+    \end{align}
+    \textbf{Remarks:}
+    \begin{itemize}
+        \item To compute the integral over the upper hemisphere $\Omega_+$, we rewrite the integral in (3) as double integral of the two polar coordinates $\phi$ and $\theta$ (Lecture 5, slide 13).
+        \item Computing the integral of a product of trigonometric functions is evil and we only want to have a sinus function, so we use the trigonometric identity in (4): $cos(\alpha)sin(\alpha) = \frac{1}{2} sin(2\alpha)$
+    \end{itemize}
+    \end{proof}
+    \item[b)]
+    \begin{proof}
+     Since $k_d=0$, we can simplify the $Phong$ BRDF as follows:\\
+    $$f_r({\omega}_i, {\omega}_o) = k_s cos^n({\omega}_r, {\omega}_o)$$
+    Considering that we need to prove that the integral over all outgoing directions is less or equal to 1, we can show that this is true for every outgoing direction reflecting the maximum amount of energy, and since all other direction will reflect less energy, it will still be true when using the outgoing direction's actual reflection.\\
+    The outgoing direction reflecting the most energy is the one that is parallel to the normal, so ${\omega}_o = N$, and since the angle of the reflection is the same as the incoming angle, we can deduce that $cos({\omega}_r, {\omega}_o) = cos({\omega}_i, N)$.\\
+    We now need to prove the following equation:
+    \begin{align}
+        & & \int_{\Omega_+} f_r({\omega}_i, {\omega}_o)cos({\theta}_o) d{\omega}_o &\leq 1\\ 
+        &\Leftrightarrow & \int_{\Omega_+} k_s cos^n({\omega}_i, N) cos({\theta}_o) d{\omega}_o &\leq 1\\
+        &\Leftrightarrow & k_s cos^n({\omega}_i, N) \underbrace{\int_{\Omega_+}  cos({\theta}_o) d{\omega}_o}_{= \pi\ \text{(see a))}} &\leq 1\\
+        &\Leftrightarrow & \pi k_s cos^n({\omega}_i, N) &\leq 1\\
+        &\Leftrightarrow & \pi \frac{{\rho}_s}{C_s} cos^n({\omega}_i, N) &\leq 1\\
+        &\Leftrightarrow & \pi \rho_s cos^n({\omega}_i, N) &\leq C_s
+    \end{align}
+    Since this needs to stay true for all $\omega_i$, it needs to be true for a certain $\omega_j$ that maximises the function $\pi \rho_s cos^n({\omega}_j, N)$. This function reaches its maximum when $cos({\omega}_j, N)$ reaches its maximum, which, in turn, means that $\omega_j = N$.
+    \begin{align}
+        & & \pi \rho_s cos^n({\omega}_i, N) \leq \pi \rho_s \underbrace{cos^n(N, N)}_{=cos^n(0)=1} &\leq C_s\\
+        &\Leftrightarrow & \pi \rho_s &\leq C_s
+    \end{align}
+    \end{proof}
+\end{enumerate}
+
+
+
+
+
+
+\newpage
+\section*{4.2 Analytical solution of the rendering equation in 2D} \label{ex2}
+\subsection*{a)}
+    \begin{align}
+        L((p,0),\omega_o) 
+        &= L_e((p,0),\omega_o) + \int_{0}^{\pi} \underbrace{f_r(\omega,(p,0),\omega_o)}_{= \frac{1}{\pi}} \cdot L((p,0),\omega) \cdot cos(\phi)\ d\omega\\
+        &= L_e((p,0),\omega_o) + \frac{1}{\pi} \cdot \int_{0}^{\pi} L((p,0),\omega) \cdot cos(\phi)\ d\omega
+    \end{align}
+    
+    
+    
+    
+
+\end{document}
+

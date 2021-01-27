@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[margin=1 in]{geometry}
+
+\title{Assignment 6}
+\author{Christian Mathieu Schmidt (2537621)
+\and Simon Laurent Lebailly (2549365)\\
+\and Group 2H}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+
+%
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[ngerman, english]{babel}
+\usepackage{marvosym}
+\usepackage{graphics}
+\usepackage{extarrows}
+\usepackage{forloop}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage[]{algorithm2e}
+
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage{cleveref}% http://ctan.org/pkg/cleveref
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{preliminary}{Preliminary}
+\newtheorem{notation}{Notation}
+\newtheorem{property}{Property}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{hypothesis}{Hypothesis}
+
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{definition}{Definition}{Definitions}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{preliminary}{Preliminary}{Preliminaries}
+\crefname{notation}{Notation}{Notations}
+\crefname{property}{Property}{Properties}
+\crefname{corollary}{Corollary}{Corollaries}
+\crefname{example}{Example}{Examples}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newenvironment{beweis}{\begin{proof}[Beweis]}{\end{proof}}
+%
+ 
+
+\begin{document}
+
+\maketitle
+
+
+\section*{6.2 Fourier Transformation} \label{ex2}
+    \begin{align}
+        \mathcal{F}(B) = F : F(k) &= \int_{-\infty}^{+\infty} B(x) \cdot e^{-2\pi ikx}dx\\
+        &= \int_{-R}^{R} 1 \cdot e^{-2\pi ikx}dx\\
+        &= \left[ \frac{-1}{i2\pi k} \cdot e^{-2\pi ikx} \right]_{-R}^R\\
+        &= \frac{-1}{i2\pi k} \cdot \left( e^{-2\pi ikR} - e^{2\pi ikR} \right)\\
+        &= \frac{1}{i2\pi k} \cdot \left( e^{2\pi ikR} - e^{-2\pi ikR} \right)\\
+        &= \frac{1}{i2\pi k} \cdot 2i \cdot sin(2\pi kR)\\
+        &= \frac{1}{\pi k} \cdot sin(2\pi kR)
+    \end{align}
+    Due to the underlying restrictions we set $R=1$:
+    \begin{align}
+        \frac{1}{\pi k} \cdot sin(2\pi kR) &= \frac{1}{\pi k} \cdot sin(2\pi k)\\
+        &= \frac{2}{2 \pi k} \cdot sin(2\pi k)\\
+        &= 2 \cdot \frac{sin(2\pi k)}{2 \pi k} = 2 \cdot sinc(2 \pi k) 
+    \end{align}
+    
+    
+    
+    
+
+\end{document}
+
