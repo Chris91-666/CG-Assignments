@@ -20,6 +20,7 @@
 \usepackage{forloop}
 \usepackage{mathtools}
 \usepackage{enumitem}
+\usepackage{tikz}
 
 \usepackage[]{algorithm2e}
 
@@ -57,7 +58,116 @@
 
 \section*{8.1 Clipping (15 Points)} \label{ex1}
 
+Using the algorithm presented on the slides, we get the following computation:
+\begin{itemize}
+    \item Line $P_4 - P_1$:\\
+    OC($P_4$) = 0110, OC($P_1$) = 1000, edge = 0
+    \begin{itemize}
+        \item OC($P_4$) AND OC($P_1$) = 0000 = 0
+        \item OC($P_4$) OR OC($P_1$) = 1110 $\neq$ 0
+        \item (OC($P_4$) XOR OC($P_1$))[0] = 1110[0] = 1
+            \begin{itemize}
+                \item[] $\Rightarrow$ Clipping on this edge:
+                \item[] $P_4$[0] = 0
+                \item[] $P_1$[0] = 1: $P_1 \Rightarrow P_1'$
+            \end{itemize}
+    \end{itemize}
+    
+    \item Line $P_1 - P_2$:\\
+    OC($P_1'$) = 0000, OC($P_2$) = 0001, edge = 0
+    \begin{itemize}
+        \item OC($P_1$) AND OC($P_2$) = 0000 = 0
+        \item OC($P_1$) OR OC($P_2$) = 0001 $\neq$ 0
+        \item (OC($P_1$) XOR OC($P_2$))[0] = 0001[0] = 0
+        \begin{itemize}
+            \item[] $\Rightarrow$ no clipping with regards to this edge
+        \end{itemize}
+    \end{itemize}
+    
+    \item Line $P_2 - P_3$:\\
+    OC($P_2$) = 0001, OC($P_3$) = 1010, edge = 0
+    \begin{itemize}
+        \item OC($P_2$) AND OC($P_3$) = 0000 = 0
+        \item OC($P_2$) OR OC($P_3$) = 1011 $\neq$ 0
+        \item (OC($P_2$) XOR OC($P_3$))[0] = 1011[0] = 1
+            \begin{itemize}
+                \item[] $\Rightarrow$ Clipping on this edge:
+                \item[] $P_2$[0] = 0
+                \item[] $P_3$[0] = 1: $P_3 \Rightarrow P_3'$
+            \end{itemize}
+    \end{itemize}
+    
+    \item Line $P_3 - P_4$:\\
+    OC($P_3$) = 0001, OC($P_4$) = 1010, edge = 0
+    \begin{itemize}
+        \item OC($P_2$) AND OC($P_3$) = 0000 = 0
+        \item OC($P_2$) OR OC($P_3$) = 1011 $\neq$ 0
+        \item (OC($P_2$) XOR OC($P_3$))[0] = 1011[0] = 1
+        \begin{itemize}
+            \item[] $\Rightarrow$ no clipping with regards to this edge
+        \end{itemize}
+    \end{itemize}
+    
+\end{itemize}
 
+\newpage
+	\begin{center}
+		\begin{tikzpicture}[scale=0.75]
+			%Zeichne Gitter der Matrix
+				\draw[gray] (0,0) -- (0,6);
+				\draw[gray] (0,6) -- (12,6);
+				\draw[gray] (12,6) -- (12,0);
+				\draw[gray] (0,0) -- (12,0);
+				
+			%User vector
+				\node at (-0.5,-0.5) {$C_1$};
+				\node at (-0.5,6.5) {$C_2$};
+				\node at (12.5,6.5) {$C_3$};
+				\node at (12.5,-0.5) {$C_4$};
+				
+				\node at (0,0) {$\times$};
+				\node at (0,6) {$\times$};
+				\node at (12,6) {$\times$};
+				\node at (12,0) {$\times$};
+				
+				
+				\node at (9,8.5) {$P_1$};
+				\node at (-6.5,3) {$P_2$};
+				\node at (14,20.5) {$P_3$};
+				\node at (15.5,-4.5) {$P_4$};
+				
+				\node at (9,8) {$\times$};
+				\node at (-6,3) {$\times$};
+				\node at (14,20) {$\times$};
+				\node at (15,-4) {$\times$};
+				
+
+				\draw[black] (9,8) -- (-6,3);
+				\draw[black] (-6,3) -- (14,20);
+				\draw[black] (14,20) -- (15,-4);
+				\draw[black] (15,-4) -- (9,8);
+				
+				
+				\node[red,thick] at (0.5,4.5) {$P_1''$};
+				\node[red,thick] at (3.5,5.5) {$P_1'$};
+				\node[red,thick] at (9.5,5.5) {$P_4''$};
+				\node[red,thick] at (11.5,1.5) {$P_4'$};
+				
+				\node[red,thick] at (0,5) {$\times$};
+				\node[red,thick] at (3,6) {$\times$};
+				\node[red,thick] at (10,6) {$\times$};
+				\node[red,thick] at (12,2) {$\times$};
+				
+				\draw[red, thick] (0,5) -- (3,6) -- (0,6) -- (0,5);
+				\draw[red, thick] (10,6) -- (12,6) -- (12,2) -- (10,6);
+
+				
+			%Item vector ^T
+				%draw[step=1cm,gray,very thin] (9,1) grid (14,2);	
+
+				
+  		\end{tikzpicture}
+  	\end{center}
 
 
 \newpage
